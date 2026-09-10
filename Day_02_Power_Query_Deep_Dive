@@ -1,0 +1,45 @@
+# Day 1: Power Query Deep Dive
+
+## Overview
+Deep dive into Power Query transformations — merging queries, appending tables, group by aggregations, and conditional columns — building on the star schema foundation from Day 1.
+
+## What I Did
+- Performed a **Group By** on `retail_orders`, aggregated by Region:
+  - `Total_Sales` = Sum of Sales
+  - `Total_Orders` = Count Rows of OrderID
+  - `Total_Profit` = Sum of Profit
+- **Merged** the resulting summary table with `retail_customers` using `Table.ExpandTableColumn`, pulling in CustomerID, CustomerName, Segment, and Region
+- Combined multiple summary tables with `Table.Combine` (regional_summary + customer_summary_merged)
+- Added a **Conditional Column** (`Customer_Value_Category`) to classify customers as VIP, Regular, or High Value based on sales/profit thresholds
+- Reviewed the full **Applied Steps** sequence to understand how each transformation builds on the last
+
+## What I Learned
+- `Group By` in Power Query is similar to SQL `GROUP BY` — it collapses rows into aggregated summaries
+- Merging queries is like a SQL join — matching keys (CustomerID) combine data from separate tables
+- `Table.Combine` stacks multiple tables together, useful for appending summary-level and detail-level data
+- Conditional columns let you create business logic (e.g. tiering customers) without writing DAX
+- The Applied Steps panel is a full audit trail — every transformation is reversible/editable
+
+## Key Skills
+- ✅ Group By aggregations (Sum, Count Rows)
+- ✅ Merging queries on a key column
+- ✅ Expanding merged table columns
+- ✅ Combining/appending tables
+- ✅ Conditional column logic
+- ✅ Reading/editing the Applied Steps sequence
+
+## Business Impact
+Turned raw order-level transaction data into a customer-level summary table with value classification and regional breakdown — the kind of aggregation used for customer segmentation, regional performance tracking, and targeting.
+
+## Screenshots
+- [Group By Logic](screenshots/day-2-group-by-logic.png) — regional_summary aggregation (Total_Sales, Total_Orders, Total_Profit) with Grouped Rows step
+- [Merge & Expand Step](screenshots/day-2-merge-expand.png) — Table.ExpandTableColumn expanding CustomerID, CustomerName, Segment, Region from retail_customers
+- [Expand Continued](screenshots/day-2-merge-expand-2.png) — expanded CustomerName, Segment, Region columns after merge
+- [Merged Result Table](screenshots/day-2-merged-result.png) — final combined table with Region, Total_Sales, Total_Orders, Total_Profit, CustomerID, and Customer_Value_Category
+- [Customer Detail View](screenshots/day-2-customer-detail.png) — CustomerID, CustomerName, and Segment breakdown
+
+## Files
+- `Retail-Analytics-Day2.pbix` — Power BI file with Day 2 transformations
+
+## Next
+Day 2: Data Modeling — relationships and star schema design
